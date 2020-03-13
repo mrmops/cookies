@@ -28,6 +28,10 @@ public class Recipe {
 
     @OneToMany
     private User AuthorId;
+
+    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "commentId")
     private List<Comment> Comments;
 
     public Recipe(Long id, String name, List<Tag> group, String description, Double rating, User authorId, List<Comment> comments){
