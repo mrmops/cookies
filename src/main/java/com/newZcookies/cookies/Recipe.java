@@ -1,17 +1,36 @@
 package com.newZcookies.cookies;
 
+import javax.persistence.*;
 import java.util.List;
 
+
+@Entity
+@Table(name = "Recipes")
 public class Recipe {
-    private long Id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(name = "name")
     private String Name;
-    private int Group;
+
+    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "groupId")
+    private List<Tag> Group;
+
+    @Column
     private String Description;
-    private double Rating;
-    private long AuthorId;
+
+    @Column
+    private Double Rating;
+
+    @OneToMany
+    private User AuthorId;
     private List<Comment> Comments;
 
-    public Recipe(long id, String name, int group, String description, double rating, long authorId, List<Comment> comments){
+    public Recipe(Long id, String name, List<Tag> group, String description, Double rating, User authorId, List<Comment> comments){
         Id = id;
         Name = name;
         Group = group;
