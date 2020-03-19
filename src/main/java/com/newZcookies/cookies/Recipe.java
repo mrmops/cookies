@@ -47,4 +47,52 @@ public class Recipe {
     public String GetName(){
         return Name;
     }
+
+    public Double getRating() {
+        return Rating;
+    }
+
+    public void setRating(Double rating) {
+        Rating = rating;
+    }
+
+    public List<Long> getComments() {
+        return Comments;
+    }
+
+    public void setComments(List<Long> comments) {
+        Comments = comments;
+    }
+
+    public User getAuthorId() {
+        return AuthorId;
+    }
+
+    public void setAuthorId(User authorId) {
+        AuthorId = authorId;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public List<Long> getGroups() {
+        return Groups;
+    }
+
+    public void setGroups(List<Long> groups) {
+        Groups = groups;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
 }
