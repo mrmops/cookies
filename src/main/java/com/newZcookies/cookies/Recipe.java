@@ -32,9 +32,9 @@ public class Recipe {
     @MapsId
     @ManyToOne
     @JoinColumn(name = "commentId")
-    private List<Comment> Comments;
+    private List<Long> Comments;
 
-    public Recipe(Long id, String name, List<Long> groups, String description, Double rating, User authorId, List<Comment> comments){
+    public Recipe(Long id, String name, List<Long> groups, String description, Double rating, User authorId, List<Long> comments){
         Id = id;
         Name = name;
         Groups = groups;
