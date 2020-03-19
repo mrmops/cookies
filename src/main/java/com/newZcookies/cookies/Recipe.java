@@ -18,7 +18,7 @@ public class Recipe {
     @MapsId
     @ManyToOne
     @JoinColumn(name = "groupId")
-    private List<Tag> Group;
+    private List<Long> Groups;
 
     @Column
     private String Description;
@@ -34,10 +34,10 @@ public class Recipe {
     @JoinColumn(name = "commentId")
     private List<Comment> Comments;
 
-    public Recipe(Long id, String name, List<Tag> group, String description, Double rating, User authorId, List<Comment> comments){
+    public Recipe(Long id, String name, List<Long> groups, String description, Double rating, User authorId, List<Comment> comments){
         Id = id;
         Name = name;
-        Group = group;
+        Groups = groups;
         Description = description;
         Rating = rating;
         AuthorId = authorId;
