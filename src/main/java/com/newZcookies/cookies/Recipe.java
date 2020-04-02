@@ -1,7 +1,7 @@
 package com.newZcookies.cookies;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -9,16 +9,11 @@ import java.util.List;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
     @Column(name = "name")
     private String Name;
-
-    @MapsId
-    @ManyToOne
-    @JoinColumn(name = "groupId")
-    private List<Long> Groups;
 
     @Column
     private String Description;
@@ -26,22 +21,15 @@ public class Recipe {
     @Column
     private Double Rating;
 
-    @OneToMany
-    private User AuthorId;
-
-    @MapsId
     @ManyToOne
-    @JoinColumn(name = "commentId")
-    private List<Long> Comments;
+    private User Author;
 
-    public Recipe(Long id, String name, List<Long> groups, String description, Double rating, User authorId, List<Long> comments){
+    public Recipe(Long id, String name, String description, Double rating, User author){
         Id = id;
         Name = name;
-        Groups = groups;
         Description = description;
         Rating = rating;
-        AuthorId = authorId;
-        Comments = comments;
+        Author = author;
     }
 
     public String GetName(){

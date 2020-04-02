@@ -21,9 +21,7 @@ public class User {
     @Column(name = "second_name")
     private String SecondName;
 
-    @MapsId
-    @ManyToOne
-    @JoinColumn(name = "recipes")
+    @OneToMany(mappedBy="Author")
     private List<Recipe> Recipes;
 
     public User(){
