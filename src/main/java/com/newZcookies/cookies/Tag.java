@@ -13,4 +13,17 @@ public class Tag {
 
     @Column(name="name", unique = true)
     private String Name;
+
+    public Tag(String name){
+        Name = name;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+
+    public String getName() {
+        return Name;
+    }
 }
