@@ -1,0 +1,26 @@
+<html>
+
+    <body>
+        <div>
+            <form method="post">
+                <input type="text" name="login" placeholder="Введите логин" />
+                <input type="text" name="name" placeholder="Введите имя пользователя" />
+                <input type="text" name="secondName" placeholder="Фамилия пользователя" />
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <div>Список пользователей</div>
+        <form method="post" action="filter">
+            <input type="text" name="filter"/>
+            <button type="submit">Найти</button>
+        </form>
+        {{#users}}
+        <div>
+            <b>{{Id}}</b>
+            <span>{{Login}}<span>
+            <span>{{Name}}</span>
+            <span>{{SecondName}}<span>
+        </div>
+        {{/users}}
+    </body>
+</html>
