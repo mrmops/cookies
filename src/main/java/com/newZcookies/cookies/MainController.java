@@ -3,6 +3,7 @@ package com.newZcookies.cookies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -16,6 +17,19 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
+        Iterable<User> users = userRepository.findAll();
+
+        model.put("users", users);
+
+        return "main";
+    }
+
+    @PostMapping("/main")
+    public String add(@RequestParam String login, @RequestParam String name, @RequestParam String secondName, Map<String, Object> model) {
+        User user = new User(login, name, secondName);
+
+        userRepository.save(user);
+
         Iterable<User> users = userRepository.findAll();
 
         model.put("users", users);

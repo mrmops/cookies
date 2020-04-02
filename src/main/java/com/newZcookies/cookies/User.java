@@ -28,10 +28,9 @@ public class User {
 
     }
 
-    public User(String login, String name, String secondName, List<Recipe> recipes) {
+    public User(String login, String name, String secondName) {
         Login = login;
         Name = name;
         SecondName = secondName;
-        Recipes = recipes;
     }
 }
