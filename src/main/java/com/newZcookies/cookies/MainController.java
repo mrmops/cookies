@@ -21,7 +21,7 @@ public class MainController {
 
         model.put("users", users);
 
-        return "main";
+        return "registerPage";
     }
 
     @PostMapping("/main")
@@ -34,6 +34,6 @@ public class MainController {
 
         model.put("users", users);
 
-        return "main";
+        return "registerPage";
     }
 }
