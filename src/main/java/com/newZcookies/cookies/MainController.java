@@ -2,11 +2,14 @@ package com.newZcookies.cookies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -34,6 +37,15 @@ public class MainController {
 
         model.put("users", users);
 
-        return "registerPage";
+        return "redirect:/user/" + user.getId().toString();
+    }
+
+    @GetMapping("/user/{id}")
+    public String userPage(@PathVariable(value = "id") Long id, Map<String, Object> model){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent())
+            return "error";
+        model.put("user", user.get());
+        return "userDetails";
     }
 }

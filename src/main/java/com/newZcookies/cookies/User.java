@@ -33,4 +33,9 @@ public class User {
         Name = name;
         SecondName = secondName;
     }
+
+
+    public Long getId() {
+        return Id;
+    }
 }
