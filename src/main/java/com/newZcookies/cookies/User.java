@@ -1,6 +1,8 @@
 package com.newZcookies.cookies;
 
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @Column(name = "login")
+    @NaturalId
     private String Login;
 
     @Column(name = "name")
