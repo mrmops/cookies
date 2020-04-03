@@ -20,7 +20,7 @@ public class UserController {
     private UserDataBase userRepository;
 
 
-    @GetMapping("/register")
+    @GetMapping("/registration")
     public String main(Map<String, Object> model) {
         Iterable<User> users = userRepository.findAll();
 
@@ -29,7 +29,7 @@ public class UserController {
         return "registerPage";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public String add(@RequestParam String login, @RequestParam String name, @RequestParam String secondName, Map<String, Object> model) {
         User user = new User(login, name, secondName);
 
