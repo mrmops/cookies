@@ -26,7 +26,11 @@ public class Recipe {
     @JoinColumn(name="user_id", nullable=false)
     private User Author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "recipe_tags",
             joinColumns = { @JoinColumn(name = "recipe_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })

@@ -4,6 +4,8 @@ package com.newZcookies.cookies;
 import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "tags")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +23,8 @@ public class Tag {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            mappedBy = "tags")
-    private Set<Recipe> posts;
+            mappedBy = "Tags")
+    private Set<Recipe> Recipes;
 
     public Long getId() {
         return Id;
