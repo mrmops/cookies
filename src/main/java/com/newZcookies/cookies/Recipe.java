@@ -80,9 +80,7 @@ public class Recipe {
         return Tags;
     }
 
-    public void setTags(Set<Tag> tags) {
-        Tags = tags;
-    }
+    public void setTags(Set<Tag> tags) {    Tags = tags;    }
 
     public Long getId() {
         return Id;
