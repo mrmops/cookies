@@ -21,10 +21,11 @@ public class UserController {
 
 
     @GetMapping("/registration")
-    public String main(Map<String, Object> model) {
+    public String main(Model model) {
         Iterable<User> users = userRepository.findAll();
 
-        model.put("users", users);
+        model.addAttribute("users", users);
+        model.addAttribute("test", "test");
 
         return "registerPage";
     }
