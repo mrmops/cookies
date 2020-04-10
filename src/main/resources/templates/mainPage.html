@@ -7,19 +7,25 @@
 </head>
 <body>
     <header th:insert="blocks/header::header"></header>
+<div class="row">
+    <div class = "col-6 border border border-info rounded p-3 ml-5">
+        <h2 class="text-center">Лучшие рецепты</h2>
+        <ul class="list-group" th:each="recipe : ${recipes}">
+            <li class="list-group-item">
+                <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none">
+                    <b th:text="${recipe.rating}"></b>
+                    <span th:text="${recipe.name}"></span>
+                    <span th:text="${recipe.description}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col">
 
-<div class = "col-1">
-    <ul class="list-group" th:each="recipe : ${recipes}">
-        <li class="list-group-item">
-            <b th:text="${recipe.Id}"></b>
-            <span th:text="${recipe.Name}"></span>
-            <span th:text="${recipe.Rating}"></span>
-            <span  th:text="${recipe.SecondName}"></span>
-        </li>
-    </ul>
-</div>
-<div class="col-2 ml-auto mr-4">
-    <a class="btn btn-outline-primary m-2 text-nowrap" href="/recipe/add">Создать новый рецепт</a>
+    </div>
+    <div class="col">
+        <a class="btn btn-outline-primary m-2 text-nowrap" href="/recipe/add">Создать новый рецепт</a>
+    </div>
 </div>
 
 </body>

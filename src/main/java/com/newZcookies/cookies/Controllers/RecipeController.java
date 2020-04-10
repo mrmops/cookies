@@ -32,7 +32,7 @@ public class RecipeController {
 
     @PostMapping("/recipe/add")
     public String addRecipe(@RequestParam String name, @RequestParam String description, Model model) {
-        Recipe recipe = new Recipe(name, description, userRepository.findById((long) 19).get());
+        Recipe recipe = new Recipe(name, description, userRepository.findById((long)24).get());
 
         recipeDataBase.save(recipe);
 
@@ -46,7 +46,7 @@ public class RecipeController {
         if(!recipe.isPresent())
             return "error";
         model.addAttribute("recipe", recipe.get());
-        return "redirect:/";
+        return "recipeDetails";
     }
 
 

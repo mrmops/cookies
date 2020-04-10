@@ -4,7 +4,6 @@ package com.newZcookies.cookies;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,76 +12,59 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     @NaturalId
-    private String Login;
+    private String login;
 
     @Column(name = "name")
-    private String Name;
+    private String name;
 
     @Column(name = "second_name")
-    private String SecondName;
+    private String secondName;
 
-    @OneToMany(mappedBy="author")
-    private Set<Recipe> Recipes;
+    @OneToMany(mappedBy="author", cascade = CascadeType.REMOVE)
+    private Set<Recipe> recipes;
 
     public User(String login, String name, String secondName) {
-        Login = login;
-        Name = name;
-        SecondName = secondName;
+        this.login = login;
+        this.name = name;
+        this.secondName = secondName;
     }
 
     public String getLogin() {
-        return Login;
+        return login;
     }
 
     public void setLogin(String login) {
-        Login = login;
+        this.login = login;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getSecondName() {
-        return SecondName;
+        return secondName;
     }
 
     public void setSecondName(String secondName) {
-        SecondName = secondName;
+        this.secondName = secondName;
     }
 
     public Set<Recipe> getRecipes() {
-        return Recipes;
+        return recipes;
     }
 
     public void setRecipes(Set<Recipe> recipes) {
-        Recipes = recipes;
+        this.recipes = recipes;
     }
 
-    public void addRecipe(Recipe recipe){
-        Recipes.add(recipe);
-    }
-
-    public void removeRecipe(Recipe recipe){
-        Recipes.remove(recipe);
-    }
-
-    public void removeRecipeById(Long id){
-        for (Recipe e: Recipes) {
-            if(e.getId().equals(id)){
-                Recipes.remove(e);
-                break;
-            }
-        }
-    }
-
-    public Long getId() { return Id; }
+    public Long getId() { return id; }
 
     public User(){}
 }
