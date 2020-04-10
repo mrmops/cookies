@@ -22,7 +22,6 @@ public class UserController {
         Iterable<User> users = userRepository.findAll();
 
         model.addAttribute("users", users);
-        model.addAttribute("test", "test");
 
         return "registerPage";
     }

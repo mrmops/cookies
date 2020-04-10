@@ -23,7 +23,7 @@
                 <b th:text="${user.Id}"></b>
                 <span th:text="${user.Login}"></span>
                 <span th:text="${user.Name}"></span>
-                <span  th:text="${user.Name}"></span>
+                <span  th:text="${user.SecondName}"></span>
                 <a class="btn btn-outline-primary button p-1" th:href="'/user/' + ${user.Id}">Профиль</a>
                 <form th:action = "'/user/' + ${user.Id} + '/remove'"  class="d-inline-block" method="post">
                     <button class="btn btn-outline-primary button p-1" type="submit">Удалить</button>
