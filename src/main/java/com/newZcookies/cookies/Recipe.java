@@ -35,12 +35,14 @@ public class Recipe {
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private Set<Tag> tags;
 
-    public Recipe(String name, String description, Double rating, User author, Set<Tag> tags){
+    public Recipe(String name, String description, User author){
         this.name = name;
         this.description = description;
-        this.rating = rating;
         this.author = author;
-        this.tags = tags;
+    }
+
+    public Recipe(){
+
     }
 
     public String getName(){
