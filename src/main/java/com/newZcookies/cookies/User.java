@@ -24,7 +24,7 @@ public class User {
     @Column(name = "second_name")
     private String SecondName;
 
-    @OneToMany(mappedBy="Author")
+    @OneToMany(mappedBy="author")
     private Set<Recipe> Recipes;
 
     public User(String login, String name, String secondName) {

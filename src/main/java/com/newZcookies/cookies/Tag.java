@@ -23,7 +23,7 @@ public class Tag {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            mappedBy = "Tags")
+            mappedBy = "tags")
     private Set<Recipe> Recipes;
 
     public Long getId() {

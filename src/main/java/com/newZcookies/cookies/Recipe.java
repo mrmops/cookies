@@ -1,7 +1,6 @@
 package com.newZcookies.cookies;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 
@@ -14,17 +13,17 @@ public class Recipe {
     private Long Id;
 
     @Column(name = "name")
-    private String Name;
+    private String name;
 
     @Column
-    private String Description;
+    private String description;
 
     @Column
-    private Double Rating;
+    private Double rating;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
-    private User Author;
+    private User author;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -34,53 +33,53 @@ public class Recipe {
     @JoinTable(name = "recipe_tags",
             joinColumns = { @JoinColumn(name = "recipe_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-    private Set<Tag> Tags;
+    private Set<Tag> tags;
 
     public Recipe(String name, String description, Double rating, User author, Set<Tag> tags){
-        Name = name;
-        Description = description;
-        Rating = rating;
-        Author = author;
-        Tags = tags;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.author = author;
+        this.tags = tags;
     }
 
     public String getName(){
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public Double getRating() {
-        return Rating;
+        return rating;
     }
 
     public void setRating(Double rating) {
-        Rating = rating;
+        this.rating = rating;
     }
 
     public User getAuthor() {
-        return Author;
+        return author;
     }
 
     public void setAuthor(User author) {
-        Author = author;
+        this.author = author;
     }
 
     public Set<Tag> getTags() {
-        return Tags;
+        return tags;
     }
 
-    public void setTags(Set<Tag> tags) {    Tags = tags;    }
+    public void setTags(Set<Tag> tags) {    this.tags = tags;    }
 
     public Long getId() {
         return Id;

@@ -17,9 +17,11 @@ public class MainController {
     private RecipeDataBase recipeDataBase;
 
     @GetMapping("/")
-    public String mainPage(@RequestParam Model model){
+    public String mainPage(Model model){
 
-        Iterable<Recipe> recipes = recipeDataBase.findAllByOrderByDescriptionAsc();
+        Iterable<Recipe> recipes = recipeDataBase.findAllTop10ByOrderByRatingAsc();
+
+        model.addAttribute("recipes", recipes);
         return "mainPage";
     }
 }

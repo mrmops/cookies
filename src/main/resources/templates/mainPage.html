@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <title> Главная страница </title>
+</head>
+<body>
+    <header th:insert="blocks/header::header"></header>
+
+<div class = "col-1">
+    <ul class="list-group" th:each="recipe : ${recipes}">
+        <li class="list-group-item">
+            <b th:text="${recipe.Id}"></b>
+            <span th:text="${recipe.Name}"></span>
+            <span th:text="${recipe.Rating}"></span>
+            <span  th:text="${recipe.SecondName}"></span>
+        </li>
+    </ul>
+</div>
+<div class="col-2 ml-auto mr-4">
+    <a class="btn btn-outline-primary m-2 text-nowrap" href="/recipe/add">Создать новый рецепт</a>
+</div>
+
+</body>
+</html>
