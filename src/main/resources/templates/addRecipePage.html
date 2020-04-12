@@ -9,11 +9,11 @@
 <header th:insert="blocks/header::header"></header>
 
 <div class = "container mt-5 mb-5">
-    <h1>Регистрация</h1>
+    <h1>Новый рецепт</h1>
     <form method="post">
-        <input class="form-control" type="text" name="name" placeholder="Введите логин" /><br>
-        <input class="form-control mh-9" type="text" name="description" placeholder="Введите имя " /><br>
-        <button type="form-control">Добавить</button><br>
+        <input class="form-control" type="text" name="name" placeholder="Название рецепта" /><br>
+        <textarea class="form-control" name="description" placeholder="Описание"></textarea><br>
+        <button type="submit" class="form-control">Добавить</button><br>
     </form>
 </div>
 
