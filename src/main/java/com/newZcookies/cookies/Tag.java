@@ -9,13 +9,13 @@ import java.util.Set;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     @Column
-    private String Name;
+    private String name;
 
     public Tag(String name){
-        Name = name;
+        this.name = name;
     }
 
     @ManyToMany(fetch = FetchType.LAZY,
@@ -27,11 +27,11 @@ public class Tag {
     private Set<Recipe> Recipes;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
 
     public String getName() {
-        return Name;
+        return name;
     }
 }

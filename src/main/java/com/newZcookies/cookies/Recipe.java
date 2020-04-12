@@ -10,7 +10,7 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -85,7 +85,7 @@ public class Recipe {
     public void setTags(Set<Tag> tags) {    this.tags = tags;    }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
 }
