@@ -1,9 +1,8 @@
 package com.newZcookies.cookies.Controllers;
 
 import com.newZcookies.cookies.Recipe;
-import com.newZcookies.cookies.RecipeDataBase;
-import com.newZcookies.cookies.User;
-import com.newZcookies.cookies.UserDataBase;
+import com.newZcookies.cookies.repository.RecipeDataBase;
+import com.newZcookies.cookies.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -23,7 +19,7 @@ public class RecipeController {
     private RecipeDataBase recipeDataBase;
 
     @Autowired
-    private UserDataBase userRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/recipe/add")
     public String addRecipePage(Model model){

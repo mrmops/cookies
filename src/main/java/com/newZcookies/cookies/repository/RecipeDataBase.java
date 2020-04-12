@@ -1,5 +1,6 @@
-package com.newZcookies.cookies;
+package com.newZcookies.cookies.repository;
 
+import com.newZcookies.cookies.Recipe;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

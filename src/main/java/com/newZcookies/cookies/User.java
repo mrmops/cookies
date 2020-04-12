@@ -2,13 +2,16 @@ package com.newZcookies.cookies;
 
 
 import org.hibernate.annotations.NaturalId;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +19,12 @@ public class User {
 
     @NaturalId
     private String login;
+
+    @Column(name = "password")
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
 
     @Column(name = "name")
     private String name;
@@ -26,45 +35,82 @@ public class User {
     @OneToMany(mappedBy="author", cascade = CascadeType.REMOVE)
     private Set<Recipe> recipes;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
     public User(String login, String name, String secondName) {
         this.login = login;
         this.name = name;
         this.secondName = secondName;
     }
 
-    public String getLogin() {
+    public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getSecondName() {
-        return secondName;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setUsername(String username) {
+        login = username;
     }
 
-    public Set<Recipe> getRecipes() {
-        return recipes;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
+    @Override
+    public String getPassword() {
+        return password;
     }
 
-    public Long getId() { return id; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public User(){}
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
