@@ -1,9 +1,12 @@
 package com.newZcookies.cookies.Controllers;
 
 import com.newZcookies.cookies.Recipe;
+import com.newZcookies.cookies.User;
 import com.newZcookies.cookies.repository.RecipeDataBase;
-import com.newZcookies.cookies.repository.UserRepository;
+import com.newZcookies.cookies.servises.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,7 @@ public class RecipeController {
     private RecipeDataBase recipeDataBase;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/recipe/add")
     public String addRecipePage(Model model){
@@ -28,7 +31,10 @@ public class RecipeController {
 
     @PostMapping("/recipe/add")
     public String addRecipe(@RequestParam String name, @RequestParam String description, Model model) {
-        Recipe recipe = new Recipe(name, description, userRepository.findAll().iterator().next());
+        User currentlyUser = userService.findUserByUserName(userService.getCurrentUsername());
+        if(currentlyUser == null)
+            return "error";
+        Recipe recipe = new Recipe(name, description, currentlyUser);
 
         recipeDataBase.save(recipe);
 
@@ -44,6 +50,8 @@ public class RecipeController {
         model.addAttribute("recipe", recipe.get());
         return "recipeDetails";
     }
+
+
 
 
 }

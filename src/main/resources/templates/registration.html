@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <title> Регистрация </title>
+</head>
+    <body>
+    <header th:insert="blocks/header::header"></header>
+        <div class = "container mt-5 mb-5">
+            <h1>Регистрация</h1>
+            <form th:action="@{/registration}" th:object="${formUser}" method="post">
+                <label for="login" class="control-label">Логин</label>
+                <input id = "login" th:field="*{userName}" class="form-control" type="text" name="login" placeholder="Введите логин" /><br>
+                <label for="name" class="control-label">Имя пользователя</label>
+                <input id = "name"th:field="*{name}" class="form-control" type="text" name="name" placeholder="Введите имя " /><br>
+                <label for="secondName" class="control-label">Фамилия пользователя</label>
+                <input id = "secondName"th:field="*{secondName}"class="form-control" type="text" name="secondName" placeholder="Введите Фамилию" /><br>
+                <label for="password" class="control-label">Пароль</label>
+                <input id = "password"th:field="*{password}"class="form-control" type="text" name="secondName" placeholder="Введите пароль" /><br>
+                <label for="repeatPassword" class="control-label">Повторите пароль</label>
+                <input id = "repeatPassword"th:field="*{passwordConfirm}"class="form-control" type="text" name="secondName" placeholder="Повторите пароль" /><br>
+                <button>Добавить</button><br>
+            </form>
+
+        </div>
+    </body>
+</html>

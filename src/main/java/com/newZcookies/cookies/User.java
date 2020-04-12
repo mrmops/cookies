@@ -14,11 +14,11 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NaturalId
-    private String login;
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -38,8 +38,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(String login, String name, String secondName) {
-        this.login = login;
+    public User(String userName, String name, String secondName) {
+        this.userName = userName;
         this.name = name;
         this.secondName = secondName;
     }
@@ -53,11 +53,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public String getUsername() {
-        return login;
     }
 
     @Override
@@ -80,8 +75,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        login = username;
+    public void setUserName(String login) {
+        this.userName = login;
     }
 
     @Override
@@ -92,6 +87,11 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
     }
 
     public void setPassword(String password) {
@@ -112,5 +112,33 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public Set<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public String getUserName(){
+        return userName;
     }
 }
