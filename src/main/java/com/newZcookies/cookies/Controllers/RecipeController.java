@@ -32,7 +32,7 @@ public class RecipeController {
 
     @PostMapping("/recipe/add")
     public String addRecipe(@RequestParam String name, @RequestParam String description, Model model) {
-        Recipe recipe = new Recipe(name, description, userRepository.findById((long)24).get());
+        Recipe recipe = new Recipe(name, description, userRepository.findAll().iterator().next());
 
         recipeDataBase.save(recipe);
 

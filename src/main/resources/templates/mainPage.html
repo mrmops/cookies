@@ -10,14 +10,12 @@
 <div class="row">
     <div class = "col-6 border border border-info rounded p-3 ml-5">
         <h2 class="text-center">Лучшие рецепты</h2>
-        <ul class="list-group" th:each="recipe : ${recipes}">
-            <li class="list-group-item">
-                <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none">
-                    <b th:text="${recipe.rating}"></b>
-                    <span th:text="${recipe.name}"></span>
-                    <span th:text="${recipe.description}"></span>
-                </a>
-            </li>
+        <ul class="list-group" >
+            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
+                <b th:text="${recipe.rating}"></b>
+                <span th:text="${recipe.name}"></span>
+                <span th:text="${recipe.description}"></span>
+            </a>
         </ul>
     </div>
     <div class="col">
