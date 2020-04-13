@@ -2,11 +2,10 @@ package com.newZcookies.cookies.Controllers;
 
 import com.newZcookies.cookies.Recipe;
 import com.newZcookies.cookies.User;
-import com.newZcookies.cookies.repository.RecipeDataBase;
+import com.newZcookies.cookies.servises.RecipeService;
 import com.newZcookies.cookies.servises.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ import java.util.Optional;
 @Controller
 public class RecipeController {
     @Autowired
-    private RecipeDataBase recipeDataBase;
+    private RecipeService recipeService;
 
     @Autowired
     private UserService userService;
@@ -36,7 +35,7 @@ public class RecipeController {
             return "error";
         Recipe recipe = new Recipe(name, description, currentlyUser);
 
-        recipeDataBase.save(recipe);
+        recipeService.saveRecipe(recipe);
 
 
         return "redirect:/recipe/" + recipe.getId().toString();
@@ -44,10 +43,12 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}")
     public String recipePage(@PathVariable(value = "id") Long id, Model model){
-        Optional<Recipe> recipe = recipeDataBase.findById(id);
-        if(!recipe.isPresent())
-            return "error";
-        model.addAttribute("recipe", recipe.get());
+        try{
+            Recipe recipe = recipeService.findRecipeById(id);
+            model.addAttribute("recipe", recipe);
+        } catch (NotFoundException e) {
+            return "recipeDetails-error";
+        }
         return "recipeDetails";
     }
 

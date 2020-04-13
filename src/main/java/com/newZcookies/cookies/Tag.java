@@ -24,7 +24,9 @@ public class Tag {
                     CascadeType.MERGE
             },
             mappedBy = "tags")
-    private Set<Recipe> Recipes;
+    private Set<Recipe> recipes;
+
+    public Tag(){}
 
     public Long getId() {
         return id;
