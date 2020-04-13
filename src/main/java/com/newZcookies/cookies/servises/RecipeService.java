@@ -1,25 +1,18 @@
 package com.newZcookies.cookies.servises;
 
 import com.newZcookies.cookies.Recipe;
-import com.newZcookies.cookies.Role;
 import com.newZcookies.cookies.User;
 import com.newZcookies.cookies.repository.RecipeRepository;
-import com.newZcookies.cookies.repository.RoleRepository;
-import com.newZcookies.cookies.repository.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
+
 @Service
-public class RecipeService{
+public class RecipeService {
     @Autowired
     RecipeRepository recipeRepository;
 
@@ -45,7 +38,7 @@ public class RecipeService{
 
     public boolean saveRecipe(Recipe recipe) {
         Optional<Recipe> recipeFromDB = recipeRepository.findById(recipe.getId());
-        if (recipeFromDB != null) {
+        if (recipeFromDB.isPresent()) {
             return false;
         }
         recipeRepository.save(recipe);
@@ -59,4 +52,10 @@ public class RecipeService{
         }
         return false;
     }
+
+    public boolean canManage(Recipe recipe, User user)
+    {
+        return recipe.getAuthor().getId().equals(user.getId());
+    }
+
 }
