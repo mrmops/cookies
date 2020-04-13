@@ -27,8 +27,10 @@ public class RecipeService {
         return recipes;
     }
 
-    public Recipe findRecipeById(Long recipeId) {
+    public Recipe findRecipeById(Long recipeId) throws NotFoundException {
         Optional<Recipe> recipeFromDataBase = recipeRepository.findById(recipeId);
+        if(!recipeFromDataBase.isPresent())
+            throw new NotFoundException("Recipes not found");
         return recipeFromDataBase.orElse(new Recipe());
     }
 
@@ -36,13 +38,8 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public boolean saveRecipe(Recipe recipe) {
-        Optional<Recipe> recipeFromDB = recipeRepository.findById(recipe.getId());
-        if (recipeFromDB.isPresent()) {
-            return false;
-        }
+    public void saveRecipe(Recipe recipe) {
         recipeRepository.save(recipe);
-        return true;
     }
 
     public boolean deleteRecipe(Long recipeId) {
