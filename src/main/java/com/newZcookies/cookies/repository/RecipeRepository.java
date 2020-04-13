@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface RecipeDataBase extends CrudRepository<Recipe, Long> {
+public interface RecipeRepository extends CrudRepository<Recipe, Long> {
     public List<Recipe> findAllTop5ByOrderByRatingAsc();
+    public List<Recipe> findByName(String name);
+    public Recipe findById();
+    public List<Recipe> findAll();
 }
