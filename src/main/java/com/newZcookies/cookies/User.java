@@ -6,7 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,6 +47,16 @@ public class User implements UserDetails {
     }
 
     public User() {
+    }
+    
+    public boolean IsAdmin(){
+        List<Role> result = new ArrayList<Role>();
+        for (Role role: roles) {
+            if(role.getName().equals("ROLE_ADMIN")){
+                result.add(role);
+            }
+        }
+        return !result.isEmpty();
     }
 
     public Long getId() {

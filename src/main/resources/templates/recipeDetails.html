@@ -13,7 +13,9 @@
         <li class="list-group-item" th:text="${recipe.name}"></li>
         <li class="list-group-item" th:text="${recipe.description}"></li>
         <li class="list-group-item" th:text="${recipe.rating}"></li>
-        <li class="list-group-item" th:text="${recipe.author.name}"></li>
+        <li class="list-group-item">
+            <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
+        </li>
     </ul>
 </div>
 </body>

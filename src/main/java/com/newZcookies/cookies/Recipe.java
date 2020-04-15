@@ -1,6 +1,9 @@
 package com.newZcookies.cookies;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 
@@ -13,6 +16,7 @@ public class Recipe {
     private Long id;
 
     @Column(name = "name")
+    @Size(max = 30, message = "Не более 30 символов")
     private String name;
 
     @Column

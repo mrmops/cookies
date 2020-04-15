@@ -14,7 +14,6 @@
             <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
                 <b th:text="${recipe.rating}"></b>
                 <span th:text="${recipe.name}"></span>
-                <span th:text="${recipe.description}"></span>
             </a>
         </ul>
     </div>

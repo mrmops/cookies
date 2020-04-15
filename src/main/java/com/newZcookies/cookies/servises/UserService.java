@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -84,4 +85,9 @@ public class UserService implements UserDetailsService {
     public User findUserByUserName(String userName){
         return userRepository.findByUserName(userName);
     }
+
+    public void updateUser(User user){
+        userRepository.save(user);
+    }
+
 }

@@ -2,19 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title th:text = "${user.Login}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title th:text="${user.username}"></title>
 </head>
 
-    <header th:insert="blocks/header::header"></header>
-    <div class = "m-auto w-50">
+<header th:insert="blocks/header::header"></header>
+<div class="container">
+    <div class="row">
+    <div class="col">
         <ul class="list-group">
-            <li class="list-group-item" th:text="${user.id}"></li>
-            <li class="list-group-item" th:text="${user.login}"></li>
-            <li class="list-group-item" th:text="${user.name}"></li>
-            <li class="list-group-item" th:text="${user.secondName}"></li>
+            <li class="list-group-item" th:text="'Логин пользователя:' + ${user.username}"></li>
+            <li class="list-group-item" th:text="'Имя пользователя:' + ${user.name}"></li>
+            <li class="list-group-item" th:text="'Фамилия пользователя:' + ${user.secondName}"></li>
         </ul>
     </div>
+    <div class="col">
+        <h1>Рецепты</h1>
+        <ul id="recipes" class="list-group">
+            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${user.recipes}">
+                <span th:text="${recipe.name}"></span>
+                <b th:text="${recipe.rating}"></b>
+            </a>
+            <div th:if="${user.recipes.isEmpty()}" class="m-auto text-black-50">Тут пустовато...</div>
+        </ul>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col">
+        <form th:action="'/users/' + ${user.id}"  method="post">
+            <select class="form-control" name="id_role">
+                <option th:each="role : ${listRoles}"
+                        th:value="${{role.id}}"
+                        th:text="${role.name}">
+                </option>
+            </select>
+            <button class="form-control">Добавить</button><br>
+        </form>
+    </div>
+</div>
+</div>
 </body>
 
 
