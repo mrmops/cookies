@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecipeRepository extends CrudRepository<Recipe, Long> {
-    public List<Recipe> findAllByOrde();
     public List<Recipe> findByName(String name);
     public Optional<Recipe> findById(Long id);
     public List<Recipe> findAll();
+    public List<Recipe> findTop10ByOrderByRatingDesc();
 }

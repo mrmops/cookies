@@ -56,7 +56,7 @@ public class RecipeService {
     }
 
     public List<Recipe> findTop5Recipes(){
-        return recipeRepository.findTop5ByOrderByRatingAsc();
+        return recipeRepository.findTop10ByOrderByRatingDesc();
     }
 
 

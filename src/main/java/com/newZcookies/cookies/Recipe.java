@@ -1,4 +1,4 @@
-﻿package com.newZcookies.cookies;
+package com.newZcookies.cookies;
 
 
 import javax.persistence.*;
@@ -50,6 +50,7 @@ public class Recipe {
         this.name = name;
         this.description = description;
         this.author = author;
+        this.rating = 0.0;
     }
 
     public Recipe(){
@@ -120,3 +121,4 @@ public class Recipe {
         updateRating();
     }
 }
+
