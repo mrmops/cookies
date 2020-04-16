@@ -1,9 +1,9 @@
-package com.newZcookies.cookies;
+﻿package com.newZcookies.cookies;
 
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -39,15 +39,20 @@ public class Recipe {
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private Set<Tag> tags;
 
+    @ElementCollection
+    @CollectionTable(name = "appraisals",
+            joinColumns = @JoinColumn(name = "recipe_id"))
+    @MapKeyJoinColumn(name = "user_id")
+    @Column(name = "appraisal")
+    private Map<User, Integer> appraisals;
+
     public Recipe(String name, String description, User author){
         this.name = name;
         this.description = description;
         this.author = author;
-        this.rating = 0.0;
     }
 
     public Recipe(){
-
     }
 
     public String getName(){
@@ -67,11 +72,21 @@ public class Recipe {
     }
 
     public Double getRating() {
-        return rating;
+        double sum = 0;
+        int count = 0;
+        for (int num:appraisals.values()) {
+            sum += num;
+            count++;
+        }
+        return count == 0 ? 0 : sum / count ;
     }
 
     public void setRating(Double rating) {
-        this.rating = rating;
+        rating =  getRating();
+    }
+
+    public void updateRating() {
+        rating =  getRating();
     }
 
     public User getAuthor() {
@@ -92,4 +107,16 @@ public class Recipe {
         return id;
     }
 
+    public Map<User, Integer> getAppraisals() {
+        return appraisals;
+    }
+
+    public void setAppraisals(Map<User, Integer> appraisals) {
+        this.appraisals = appraisals;
+    }
+
+    public void addAppraisals(User user, int appraisal){
+        appraisals.put(user, appraisal);
+        updateRating();
+    }
 }

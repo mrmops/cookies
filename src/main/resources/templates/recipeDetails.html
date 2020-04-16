@@ -7,16 +7,29 @@
 </head>
 
 <header th:insert="blocks/header::header"></header>
-<div class = "m-auto w-50">
-    <ul class="list-group">
-        <li class="list-group-item" th:text="${recipe.id}"></li>
-        <li class="list-group-item" th:text="${recipe.name}"></li>
-        <li class="list-group-item" th:text="${recipe.description}"></li>
-        <li class="list-group-item" th:text="${recipe.rating}"></li>
-        <li class="list-group-item">
-            <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
-        </li>
-    </ul>
+<div class="container"></div>
+    <div class = "row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item" th:text="${recipe.id}"></li>
+                <li class="list-group-item" th:text="${recipe.name}"></li>
+                <li class="list-group-item" th:text="${recipe.rating}"></li>
+                <li class="list-group-item">
+                    <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
+                </li>
+            </ul>
+            <div th:text="${recipe.description}"></div>
+        </div>
+        <div th:if="${!recipe.getAppraisals().containsKey(currentlyUser)}" class="col">
+            <form th:action="'/recipe/' + ${recipe.id}"  method="post">
+                <label for="select">Оцените рецепт</label>
+                    <select class="form-control" name="appraisal" id="select">
+                        <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}"></option>
+                    </select>
+                <button class="form-control">Добавить</button><br>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
