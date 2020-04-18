@@ -51,6 +51,20 @@ public class RecipeController {
         return "recipeDetails";
     }
 
+
+    @GetMapping("/recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable(value = "id") Long id, Model model, Principal currentlyPrincipal) throws NotFoundException {
+        Recipe recipe = recipeService.findRecipeById(id);
+        User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
+        if(recipe.getAuthor().equals(currentlyUser) || currentlyUser.isAdmin())
+        {
+            recipeService.deleteRecipe(recipe.getId());
+            return "redirect:/";
+        }
+        else
+            return "error-page";
+    }
+
     @PostMapping("/recipe/{id}")
     public String addAppraisal(@PathVariable(value = "id") Long recipe_id, @ModelAttribute("appraisal") int appraisal, Principal currentlyPrincipal) throws NotFoundException {
         User user = userService.findUserByUserName(currentlyPrincipal.getName());

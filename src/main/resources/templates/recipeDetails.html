@@ -17,6 +17,9 @@
                 <li class="list-group-item">
                     <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
                 </li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or recipe.author == currentlyUser}" class="list-group-item">
+                    <a th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn-danger">Удалить</a>
+                </li>
             </ul>
             <div th:text="${recipe.description}"></div>
         </div>

@@ -53,8 +53,7 @@ public class Recipe {
         this.rating = 0.0;
     }
 
-    public Recipe(){
-    }
+    public Recipe(){}
 
     public String getName(){
         return name;

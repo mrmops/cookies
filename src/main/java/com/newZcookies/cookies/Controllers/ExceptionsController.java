@@ -1,13 +1,15 @@
 package com.newZcookies.cookies.Controllers;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
+/*
 @ControllerAdvice
 public class ExceptionsController {
-    public ModelAndView exceptionOfEverything(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("error", ex.getMessage());
-        return modelAndView;
+    public String exceptionOfEverything(Exception ex, Model model) {
+        model.addAttribute("error", ex.getStackTrace());
+        return "error";
     }
 }
+*/

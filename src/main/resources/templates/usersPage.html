@@ -17,8 +17,8 @@
                             <div class="col border border-dark" th:text="${user.id}"></div>
                             <div class="col-lg-10 border border-dark" th:text="${user.username} + ' ' + ${user.name}  + ' ' + ${user.secondName}"></div>
                         </a>
-                        <a th:if="${!user.IsAdmin()}" th:href="'/users/' + ${user.id} + '/delete'" class="btn btn-danger border border-dark rounded-0 col">Удалить</a>
-                        <a th:if="${user.IsAdmin()}" class="btn btn-info border border-dark rounded-0 col">Админ</a>
+                        <a th:if="${!user.isAdmin()}" th:href="'/users/' + ${user.id} + '/delete'" class="btn btn-danger border border-dark rounded-0 col">Удалить</a>
+                        <a th:if="${user.isAdmin()}" class="btn btn-info border border-dark rounded-0 col">Админ</a>
                     </div>
                 </div>
             </ul>

@@ -46,7 +46,7 @@ public class User implements UserDetails {
     public User() {
     }
     
-    public boolean IsAdmin(){
+    public boolean isAdmin(){
         List<Role> result = new ArrayList<Role>();
         for (Role role: roles) {
             if(role.getName().equals("ROLE_ADMIN")){
