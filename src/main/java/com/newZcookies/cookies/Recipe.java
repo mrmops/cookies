@@ -3,6 +3,8 @@ package com.newZcookies.cookies;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Set;
 
@@ -72,21 +74,21 @@ public class Recipe {
     }
 
     public Double getRating() {
+        return BigDecimal.valueOf(updateRating()).setScale(1, RoundingMode.DOWN).doubleValue();
+    }
+
+    public void setRating(Double rating) {
+        this.rating =  updateRating();
+    }
+
+    public Double updateRating() {
         double sum = 0;
         int count = 0;
         for (int num:appraisals.values()) {
             sum += num;
             count++;
         }
-        return count == 0 ? 0 : sum / count ;
-    }
-
-    public void setRating(Double rating) {
-        rating =  getRating();
-    }
-
-    public void updateRating() {
-        rating =  getRating();
+        return count == 0 ? 0 : sum / count;
     }
 
     public User getAuthor() {

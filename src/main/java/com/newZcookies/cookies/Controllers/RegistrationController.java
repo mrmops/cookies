@@ -30,18 +30,19 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
         model.addAttribute("formUser", userForm);
+        boolean haveErrors = false;
         if (bindingResult.hasErrors()) {
             return "registration";
         }
         if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
             model.addAttribute("passwordError", true);
-            return "registration";
+            haveErrors = true;
         }
         if (!userService.saveUser(userForm)){
             model.addAttribute("usernameError", true);
-            return "registration";
+            haveErrors = true;
         }
 
-        return "redirect:/";
+        return haveErrors ? "registration" : "redirect:/";
     }
 }
