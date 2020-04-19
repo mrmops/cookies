@@ -7,21 +7,17 @@
 </head>
 
 <header th:insert="blocks/header::header"></header>
-<div class="container"></div>
+<div class="container m-a">
     <div class = "row">
         <div class="col">
             <ul class="list-group">
-                <li class="list-group-item" th:text="${recipe.id}"></li>
                 <li class="list-group-item" th:text="${recipe.name}"></li>
                 <li class="list-group-item" th:text="${recipe.rating}"></li>
                 <li class="list-group-item">
                     <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
                 </li>
-                <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or recipe.author == currentlyUser}" class="list-group-item">
-                    <a th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn-danger">Удалить</a>
-                </li>
+                <a th:if="${recipe.author == currentlyUser}" th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn btn-danger">Удалить</a>
             </ul>
-            <div th:text="${recipe.description}"></div>
         </div>
         <div th:if="${!recipe.getAppraisals().containsKey(currentlyUser)}" class="col">
             <form th:action="'/recipe/' + ${recipe.id}"  method="post">
@@ -33,6 +29,34 @@
             </form>
         </div>
     </div>
+</div>
+<div class="container">
+    <span th:text="${recipe.description}"></span>
+</div>
+
+<div class="container">
+    <h2>Комментарии</h2>
+    <div class="p-4">
+        <form th:action="${'/recipe/' + recipe.id + '/addComment'}" method="post">
+            <label for="comment">Оставьте отзыв</label>
+            <textarea id="comment" class="w-100" type="text" placeholder="Комментировать" name="text"></textarea>
+            <button class="btn btn-outline-primary" type="submit">Отправить</button>
+        </form>
+    </div>
+    <div class="border rounded border-bottom p-4">
+        <div class="row m-md-1 border rounded m-3 p-2" th:each="comment : ${recipe.comments}">
+            <div class="col-10">
+                <span class="" th:text="${comment.author.username}"></span>
+                <div class="" th:text="${comment.text}"></div>
+            </div>
+            <a class="btn btn-outline-danger col"
+               th:if="${currentlyUser == comment.author}"
+               th:href="${'/comment/' + comment.id + '/delete'}"
+            >Удалить</a>
+        </div>
+        <span th:if="${recipe.comments.isEmpty()}"  class="m-auto text-center text-black-50">Комментариев нет.... Будь первым!</span>
+    </div>
+
 </div>
 </body>
 </html>
