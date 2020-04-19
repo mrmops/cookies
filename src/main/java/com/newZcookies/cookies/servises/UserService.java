@@ -36,15 +36,17 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUserName(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Пользователь не найден!");
         }
 
         return user;
     }
 
     public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            throw new UsernameNotFoundException("Пользователь не найден!");
+        return user.get();
     }
 
     public List<User> allUsers() {
@@ -64,17 +66,11 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
-            return true;
         }
-        return false;
-    }
-
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
-                .setParameter("paramId", idMin).getResultList();
+        throw new UsernameNotFoundException("Пользователь не найден!");
     }
 
     public String getCurrentUsername() {
@@ -83,7 +79,10 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByUserName(String userName){
-        return userRepository.findByUserName(userName);
+        User user = userRepository.findByUserName(userName);
+        if(user == null)
+            throw new UsernameNotFoundException("Пользователь не найден!");
+        return user;
     }
 
     public void updateUser(User user){

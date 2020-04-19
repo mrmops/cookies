@@ -48,6 +48,9 @@ public class Recipe {
     @Column(name = "appraisal")
     private Map<User, Integer> appraisals;
 
+    @OneToMany(mappedBy="recipe", cascade = CascadeType.REMOVE)
+    private Set<Comment> comments;
+
     public Recipe(String name, String description, User author){
         this.name = name;
         this.description = description;
@@ -120,6 +123,18 @@ public class Recipe {
     public void addAppraisals(User user, int appraisal){
         appraisals.put(user, appraisal);
         updateRating();
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment){
+        comments.add(comment);
     }
 }
 

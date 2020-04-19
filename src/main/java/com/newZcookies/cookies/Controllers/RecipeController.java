@@ -1,7 +1,9 @@
 package com.newZcookies.cookies.Controllers;
 
+import com.newZcookies.cookies.Comment;
 import com.newZcookies.cookies.Recipe;
 import com.newZcookies.cookies.User;
+import com.newZcookies.cookies.servises.CommentService;
 import com.newZcookies.cookies.servises.RecipeService;
 import com.newZcookies.cookies.servises.UserService;
 import javassist.NotFoundException;
@@ -19,6 +21,8 @@ public class RecipeController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/recipe/add")
     public String addRecipePage(Model model){
