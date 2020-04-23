@@ -1,11 +1,13 @@
 package com.newZcookies.cookies.servises;
 
 import com.newZcookies.cookies.Comment;
+import com.newZcookies.cookies.Recipe;
 import com.newZcookies.cookies.repository.CommentRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +32,9 @@ public class CommentService {
         if(!comment.isPresent())
             throw new NotFoundException("Комментарий не найден!");
         commentRepository.deleteById(id);
+    }
+
+    public List<Comment> findAllByRecipeId(Long recipe_id){
+        return commentRepository.findAllByRecipeIdOrderByTimeOfCreateAsc(recipe_id);
     }
 }

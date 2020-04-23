@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class RecipeController {
@@ -35,7 +36,6 @@ public class RecipeController {
         if(currentlyUser == null)
             return "error";
         Recipe recipe = new Recipe(name, description, currentlyUser);
-
         recipeService.saveRecipe(recipe);
 
 
@@ -47,8 +47,10 @@ public class RecipeController {
         try{
             Recipe recipe = recipeService.findRecipeById(id);
             User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
+            List<Comment> comments = commentService.findAllByRecipeId(recipe.getId());
             model.addAttribute("recipe", recipe);
             model.addAttribute("currentlyUser", currentlyUser);
+            model.addAttribute("comments", comments);
         } catch (NotFoundException e) {
             return "recipeDetails-error";
         }
