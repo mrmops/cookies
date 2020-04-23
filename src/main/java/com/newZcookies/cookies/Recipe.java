@@ -80,7 +80,7 @@ public class Recipe {
         return BigDecimal.valueOf(updateRating()).setScale(1, RoundingMode.DOWN).doubleValue();
     }
 
-    public void setRating(Double rating) {
+    public void setRating() {
         this.rating =  updateRating();
     }
 
@@ -121,8 +121,11 @@ public class Recipe {
     }
 
     public void addAppraisals(User user, int appraisal){
-        appraisals.put(user, appraisal);
-        updateRating();
+        if(appraisals.containsKey(user))
+            appraisals.replace(user, appraisal);
+        else
+            appraisals.put(user, appraisal);
+        setRating();
     }
 
     public Set<Comment> getComments() {

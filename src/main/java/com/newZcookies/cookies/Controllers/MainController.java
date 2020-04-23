@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class MainController {
     @Autowired
@@ -15,8 +17,8 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        Iterable<Recipe> recipes;
-            recipes = recipeService.findTop5Recipes();
+        List<Recipe> recipes;
+        recipes = recipeService.findTop10Recipes();
         model.addAttribute("recipes", recipes);
         return "mainPage";
     }

@@ -55,7 +55,7 @@ public class RecipeService {
         return recipe.getAuthor().getId().equals(user.getId());
     }
 
-    public List<Recipe> findTop5Recipes(){
+    public List<Recipe> findTop10Recipes(){
         return recipeRepository.findTop10ByOrderByRatingDesc();
     }
 

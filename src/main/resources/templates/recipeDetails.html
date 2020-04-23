@@ -28,6 +28,15 @@
                 <button class="form-control">Добавить</button><br>
             </form>
         </div>
+        <div th:if="${recipe.getAppraisals().containsKey(currentlyUser)}" class="col">
+            <form th:action="'/recipe/' + ${recipe.id}"  method="post">
+                <label for="select">Изменить оценку?</label>
+                <select class="form-control" name="appraisal" id="">
+                    <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}" th:selected="${n == recipe.getAppraisals().get(currentlyUser)}"></option>
+                </select>
+                <button class="form-control">Изменить</button><br>
+            </form>
+        </div>
     </div>
 </div>
 <div class="container">
