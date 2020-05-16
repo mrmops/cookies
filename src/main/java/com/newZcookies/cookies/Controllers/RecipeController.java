@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,12 +39,15 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/add")
-    public String addRecipe(@RequestParam String name, @RequestParam String description, @ModelAttribute(value = "tagList") Set<Tag> tags, Model model, Principal currentlyPrincipal) {
+    public String addRecipe(@RequestParam String name, @RequestParam String description, @RequestParam Set<Long> tagList, Model model, Principal currentlyPrincipal) throws NotFoundException {
         User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
+        Set<Tag> tags = new HashSet<Tag>();
+        for (Long i: tagList
+             ) {
+            tags.add(tagService.findTagById(i));
+        }
         Recipe recipe = new Recipe(name, description, currentlyUser, tags);
         recipeService.saveRecipe(recipe);
-
-
         return "redirect:/recipe/" + recipe.getId().toString();
     }
 

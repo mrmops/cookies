@@ -15,7 +15,7 @@
         <input class="form-control" type="text" name="name" placeholder="Название рецепта" /><br>
         <textarea class="form-control" typeof="text" name="description" placeholder="Описание"></textarea><br>
         <select class="form-control" id="tagList" name="tagList" multiple>
-                <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.name}"></option>
+                <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
         </select><br>
         <div th:if = "${tags.isEmpty()}">
             Теги? никогда о них не слышал! можешь попробовать их создать!
