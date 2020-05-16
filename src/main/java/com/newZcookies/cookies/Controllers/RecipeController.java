@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class RecipeController {
@@ -37,9 +38,9 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/add")
-    public String addRecipe(@RequestParam String name, @RequestParam String description, @RequestParam List<Tag> , Model model, Principal currentlyPrincipal) {
+    public String addRecipe(@RequestParam String name, @RequestParam String description, @ModelAttribute(value = "tagList") Set<Tag> tags, Model model, Principal currentlyPrincipal) {
         User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
-        Recipe recipe = new Recipe(name, description, currentlyUser);
+        Recipe recipe = new Recipe(name, description, currentlyUser, tags);
         recipeService.saveRecipe(recipe);
 
 

@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,11 +52,12 @@ public class Recipe {
     @OneToMany(mappedBy="recipe", cascade = CascadeType.REMOVE)
     private Set<Comment> comments;
 
-    public Recipe(String name, String description, User author){
+    public Recipe(String name, String description, User author, Set<Tag> tags){
         this.name = name;
         this.description = description;
         this.author = author;
         this.rating = 0.0;
+        this.tags = tags;
     }
 
     public Recipe(){}
