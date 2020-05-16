@@ -31,7 +31,7 @@ public class RecipeService {
         Optional<Recipe> recipeFromDataBase = recipeRepository.findById(recipeId);
         if(!recipeFromDataBase.isPresent())
             throw new NotFoundException("Recipes not found");
-        return recipeFromDataBase.orElse(new Recipe());
+        return recipeFromDataBase.get();
     }
 
     public List<Recipe> allRecipes() {
@@ -52,12 +52,15 @@ public class RecipeService {
 
     public boolean canManage(Recipe recipe, User user)
     {
-        return recipe.getAuthor().getId().equals(user.getId());
+        return recipe.getAuthor().equals(user);
     }
 
     public List<Recipe> findTop10Recipes(){
         return recipeRepository.findTop10ByOrderByRatingDesc();
     }
 
+    public List<Recipe> findAllRecipesByTagName(String name){
+        return recipeRepository.findByTags_Name(name);
+    }
 
 }

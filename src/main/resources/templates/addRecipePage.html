@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <title> Добавить рецепт </title>
 </head>
 <body>
@@ -13,8 +14,31 @@
     <form method="post">
         <input class="form-control" type="text" name="name" placeholder="Название рецепта" /><br>
         <textarea class="form-control" typeof="text" name="description" placeholder="Описание"></textarea><br>
-        <button class="form-control">Добавить</button><br>
+        <select class="form-control" id="tagList" name="tagList" multiple>
+                <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.name}"></option>
+        </select><br>
+        <div th:if = "${tags.isEmpty()}">
+            Теги? никогда о них не слышал! можешь попробовать их создать!
+        </div><br>
+
+        <button class="form-control btn-success">Добавить</button><br>
     </form>
+    <div>
+        <input class="form-control" type="text" id="tagText" name="tagText" placeholder="Тегов не бывает мало, а вот много нам не нужно" /><br>
+        <label for="tagText" >Добавить Тег!</label>
+        <button onclick="retrieveGuests()" class="form-control btn-info"type="button">Добавить тег</button><br>
+    </div>
+
+    <script>
+        function retrieveGuests() {
+            let url = '/tags/add';
+            let html = '';
+            if ($('#tagText').val() != '') {
+                url = url + '/' + $('#tagText').val();
+            }
+            $("#tagList").load(url);
+        }
+    </script>
 </div>
 
 </body>

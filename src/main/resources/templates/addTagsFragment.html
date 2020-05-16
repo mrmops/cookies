@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+<select th:fragment="resultsList" id="results-block">
+    <option th:each="tag : ${tags}" th:value="${tag}" th:text="${tag.getName()}"></option>
+</select>
+</body>
+</html>

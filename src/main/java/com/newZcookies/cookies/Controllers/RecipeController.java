@@ -2,9 +2,11 @@ package com.newZcookies.cookies.Controllers;
 
 import com.newZcookies.cookies.Comment;
 import com.newZcookies.cookies.Recipe;
+import com.newZcookies.cookies.Tag;
 import com.newZcookies.cookies.User;
 import com.newZcookies.cookies.servises.CommentService;
 import com.newZcookies.cookies.servises.RecipeService;
+import com.newZcookies.cookies.servises.TagService;
 import com.newZcookies.cookies.servises.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +26,19 @@ public class RecipeController {
     private UserService userService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/recipe/add")
     public String addRecipePage(Model model){
+        List<Tag> tags = tagService.findAllTags();
+        model.addAttribute("tags", tags);
         return "addRecipePage";
     }
 
     @PostMapping("/recipe/add")
-    public String addRecipe(@RequestParam String name, @RequestParam String description, Model model) {
-        User currentlyUser = userService.findUserByUserName(userService.getCurrentUsername());
-        if(currentlyUser == null)
-            return "error";
+    public String addRecipe(@RequestParam String name, @RequestParam String description, @RequestParam List<Tag> , Model model, Principal currentlyPrincipal) {
+        User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
         Recipe recipe = new Recipe(name, description, currentlyUser);
         recipeService.saveRecipe(recipe);
 
@@ -43,17 +47,13 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/{id}")
-    public String recipePage(@PathVariable(value = "id") Long id, Model model, Principal currentlyPrincipal){
-        try{
-            Recipe recipe = recipeService.findRecipeById(id);
-            User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
-            List<Comment> comments = commentService.findAllByRecipeId(recipe.getId());
-            model.addAttribute("recipe", recipe);
-            model.addAttribute("currentlyUser", currentlyUser);
-            model.addAttribute("comments", comments);
-        } catch (NotFoundException e) {
-            return "recipeDetails-error";
-        }
+    public String recipePage(@PathVariable(value = "id") Long id, Model model, Principal currentlyPrincipal) throws NotFoundException {
+        Recipe recipe = recipeService.findRecipeById(id);
+        User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
+        List<Comment> comments = commentService.findAllByRecipeId(recipe.getId());
+        model.addAttribute("recipe", recipe);
+        model.addAttribute("currentlyUser", currentlyUser);
+        model.addAttribute("comments", comments);
         return "recipeDetails";
     }
 
@@ -78,5 +78,12 @@ public class RecipeController {
         recipe.addAppraisals(user, appraisal);
         recipeService.saveRecipe(recipe);
         return "redirect:/recipe/" + recipe_id;
+    }
+
+    @GetMapping("/recipe/search/{name}")
+    public String SearchRecipes(@PathVariable(value = "name") String name, Model model){
+        List<Recipe> recipes = recipeService.findAllRecipesByTagName(name);
+        model.addAttribute("find_recipes", recipes);
+        return "search_page";
     }
 }
