@@ -9,7 +9,12 @@
 <header th:insert="blocks/header::header"></header>
 <div class="row">
     <div class = "col-6 border border border-info rounded p-3 ml-5">
-        <h2 class="text-center">Рецепты по запросу</h2>
+        <h2 class="text-center">Архив рецептов</h2>
+        <form th:action="${'/search'}" method="post">
+        <label for="search">Поиск рецепта</label>
+        <input id="search" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
+        <button class="btn btn-outline-primary" type="submit">Поиск</button>
+        </form>
         <ul class="list-group" >
             <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
                 <b th:text="${recipe.rating}"></b>
@@ -20,4 +25,4 @@
 </div>
 
 </body>
-</html>
+</html> +
