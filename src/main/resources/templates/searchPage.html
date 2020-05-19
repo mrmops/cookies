@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <title> Поиск рецептов </title>
+</head>
+<body>
+<header th:insert="blocks/header::header"></header>
+<div class="row">
+    <div class = "col-6 border border border-info rounded p-3 ml-5">
+        <h2 class="text-center">Рецепты по запросу</h2>
+        <ul class="list-group" >
+            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
+                <b th:text="${recipe.rating}"></b>
+                <span th:text="${recipe.name}"></span>
+            </a>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
