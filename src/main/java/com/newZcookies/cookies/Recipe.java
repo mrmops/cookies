@@ -2,6 +2,7 @@ package com.newZcookies.cookies;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +24,7 @@ public class Recipe {
     private String name;
 
     @Column
+    @Size(max = 5000, message = "Не более 5000 символов")
     private String description;
 
     @Column

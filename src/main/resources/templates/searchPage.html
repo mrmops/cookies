@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <title> Поиск рецептов </title>
 </head>
 <body>
@@ -10,19 +11,31 @@
 <div class="row">
     <div class = "col-6 border border border-info rounded p-3 ml-5">
         <h2 class="text-center">Архив рецептов</h2>
-        <form th:action="${'/search'}" method="post">
-        <label for="search">Поиск рецепта</label>
-        <input id="search" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
-        <button class="btn btn-outline-primary" type="submit">Поиск</button>
-        </form>
-        <ul class="list-group" >
-            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
-                <b th:text="${recipe.rating}"></b>
-                <span th:text="${recipe.name}"></span>
-            </a>
-        </ul>
+        <div class="form-check">
+            <label for="search">Поиск рецепта</label>
+            <input id="search" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
+            <button class="btn btn-outline-primary" onclick="findRecipe()" type="button">Поиск</button>
+        </div>
+        <div id="result">
+            <ul class="list-group" >
+                <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
+                    <b th:text="${recipe.rating}"></b>
+                    <span th:text="${recipe.name}"></span>
+                </a>
+            </ul>
+        </div>
+        <script>
+            function findRecipe() {
+                let url = '/search/find';
+                if ($('#search').val() != '') {
+                    url = url + '@' + $('#search').val();
+                }
+                console.log(url);
+                $('#result').load(url);
+            }
+        </script>
     </div>
 </div>
 
 </body>
-</html> +
+</html>

@@ -35,5 +35,8 @@ public class TagService {
     public void saveTag(Tag tag){
         tagRepository.save(tag);
     }
+    public List<Tag> findByNameContains(String name){
+        return tagRepository.findByNameContains(name);
+    }
 
 }
