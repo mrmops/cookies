@@ -30,7 +30,6 @@
             let text = $('#tagText').val();
             if (text != '') {
                 text = text.split(' ').join('_');
-                console.log(text);
                 url = url + '/' + text;
             }
             $("#tagList").load(url);
