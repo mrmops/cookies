@@ -42,7 +42,7 @@ public class UserContoller {
     @PostMapping("/users/{id}")
     public String addRoleToUser(@PathVariable(value = "id") Long user_id, @ModelAttribute("id_role") Long id_role) {
         User user = userService.findUserById(user_id);
-        user.getRoles().add(roleRepository.findById(id_role).get());
+        user.getRoles().add(roleRepository.findById(id_role).orElse(new Role("OTHER")));
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
