@@ -36,8 +36,20 @@ public class SearchController {
         return "searchPage";
     }
 
+    @GetMapping("/search/find@{text}")
+    public String searchPageFind(@PathVariable("text") String text, Model model) throws NotFoundException {
+        Set<Tag> tags = new HashSet<Tag>();
+        for (String e: text.split(" ")
+        ) {
+            tags.addAll(tagService.findByNameContains(e));
+        }
+        Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
+        model.addAttribute("recipes", recipes);
+        return "searchPage";
+    }
+
     @RequestMapping("/search/find@{text}")
-    public String addComment(@PathVariable("text") String text, Model model) throws NotFoundException {
+    public String helpSearch(@PathVariable("text") String text, Model model) throws NotFoundException {
         Set<Tag> tags = new HashSet<Tag>();
         for (String e: text.split(" ")
              ) {
