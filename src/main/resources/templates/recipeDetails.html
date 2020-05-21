@@ -40,7 +40,7 @@
         <div class="col-2">
             <h3>Теги</h3>
             <ul id="recipes" class="list-group">
-                <a class="d-block text-decoration-none list-group-item" th:each="tag : ${recipe.tags}" th:href="/search/">
+                <a class="d-block text-decoration-none list-group-item" th:each="tag : ${recipe.tags}" th:href="'/search/find@' + ${tag.name}'">
                     <span th:text="${tag.name}"></span>
                 </a>
                 <div th:if="${recipe.tags.isEmpty()}" class="m-auto text-black-50">Тут пустовато...</div>
