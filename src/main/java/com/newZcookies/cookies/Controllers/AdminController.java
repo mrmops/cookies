@@ -27,7 +27,7 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/users/{id}/delete", method = RequestMethod.GET)
     public String handleDeleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        userService.deleteUser(userService.findUserById(id));
         return "redirect:/admin/users";
     }
 

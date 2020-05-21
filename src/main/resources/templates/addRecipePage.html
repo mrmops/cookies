@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <title> Добавить рецепт </title>
-</head>
+<head th:replace="blocks/head::head"></head>
 <body>
 <header th:insert="blocks/header::header"></header>
 
@@ -14,7 +9,7 @@
     <form method="post">
         <input class="form-control" type="text" name="name" placeholder="Название рецепта" /><br>
         <textarea class="form-control" typeof="text" name="description" placeholder="Описание"></textarea><br>
-        <select class="form-control" id="tagList" name="tagList" multiple>
+        <select th:fragment="tagList" class="form-control" id="tagList" name="tagList" multiple>
                 <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
         </select><br>
         <div th:if = "${tags.isEmpty()}">

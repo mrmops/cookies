@@ -2,9 +2,11 @@ package com.newZcookies.cookies.repository;
 
 import com.newZcookies.cookies.Recipe;
 import com.newZcookies.cookies.Tag;
+import com.newZcookies.cookies.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,4 +19,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     public List<Recipe> findByTags_Name(String name);
     public List<Recipe> findByDescriptionContainsIgnoreCaseOrNameContainsIgnoreCase(String text, String name);
     public List<Recipe> findByTagsContains(Tag tag);
+    public List<Recipe> findByAppraisalsContains(Map<User, Integer> appraisals);
 }

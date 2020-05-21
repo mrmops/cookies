@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title th:text = "${recipe.name}"></title>
-</head>
+<head th:insert="blocks/head::head"></head>
 
 <header th:insert="blocks/header::header"></header>
 <div class="container m-a">
@@ -16,7 +12,7 @@
                 <li class="list-group-item">
                     <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
                 </li>
-                <a th:if="${recipe.author == currentlyUser}" th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn btn-danger">Удалить</a>
+                <a th:if="${recipe.author == currentlyUser or currentlyUser.isAdmin()}" th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn btn-danger">Удалить</a>
             </ul>
         </div>
         <div th:if="${!recipe.getAppraisals().containsKey(currentlyUser)}" class="col-2">
@@ -40,7 +36,7 @@
         <div class="col-2">
             <h3>Теги</h3>
             <ul id="recipes" class="list-group">
-                <a class="d-block text-decoration-none list-group-item" th:each="tag : ${recipe.tags}" th:href="'/search/find@' + ${tag.name.toString()}'">
+                <a class="d-block text-decoration-none list-group-item" th:href="'/search/find+' + ${tag.name}" th:each="tag : ${recipe.tags}" >
                     <span th:text="${tag.name}"></span>
                 </a>
                 <div th:if="${recipe.tags.isEmpty()}" class="m-auto text-black-50">Тут пустовато...</div>

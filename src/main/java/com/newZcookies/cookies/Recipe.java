@@ -20,10 +20,10 @@ public class Recipe {
     private Long id;
 
     @Column(name = "name")
-    @Size(max = 30, message = "Не более 30 символов")
+    @Size(max = 50, message = "Не более 30 символов")
     private String name;
 
-    @Column
+    @Column(length=5000)
     @Size(max = 5000, message = "Не более 5000 символов")
     private String description;
 

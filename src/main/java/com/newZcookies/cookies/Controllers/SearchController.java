@@ -36,7 +36,7 @@ public class SearchController {
         return "searchPage";
     }
 
-    @GetMapping("/search/find@{text}")
+    @GetMapping("/search/find+{text}")
     public String searchPageFind(@PathVariable("text") String text, Model model) throws NotFoundException {
         Set<Tag> tags = new HashSet<Tag>();
         for (String e: text.split(" ")
@@ -57,6 +57,18 @@ public class SearchController {
         }
         Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
         model.addAttribute("recipes", recipes);
-        return "addRecipeListFragment::resultList";
+        return "searchPage::resultList";
+    }
+
+    @GetMapping("/search/find")
+    public String redirectSearch(@ModelAttribute("searchInput") String text, Model model) throws NotFoundException {
+        Set<Tag> tags = new HashSet<Tag>();
+        for (String e: text.split(" ")
+        ) {
+            tags.addAll(tagService.findByNameContains(e));
+        }
+        Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
+        model.addAttribute("recipes", recipes);
+        return "searchPage";
     }
 }

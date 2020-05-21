@@ -30,11 +30,14 @@ public class User implements UserDetails {
     @Column(name = "second_name")
     private String secondName;
 
-    @OneToMany(mappedBy="author", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy="author", cascade = CascadeType.ALL)
     private Set<Recipe> recipes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 
     public User(String userName, String name, String secondName) {
         this.userName = userName;

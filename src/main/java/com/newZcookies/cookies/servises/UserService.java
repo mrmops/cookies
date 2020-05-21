@@ -66,9 +66,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
+    public void deleteUser(User user) {
+        if (userRepository.findById(user.getId()).isPresent()) {
+            userRepository.deleteById(user.getId());
         }
         throw new UsernameNotFoundException("Пользователь не найден!");
     }

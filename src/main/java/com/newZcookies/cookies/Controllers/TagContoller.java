@@ -32,6 +32,6 @@ public class TagContoller {
         tagService.saveTag(new Tag(name));
         List<Tag> tags = tagService.findAllTags();
         model.addAttribute("tags", tags);
-        return "addTagsFragment :: resultsList";
+        return "addRecipePage :: tagList";
     }
 }

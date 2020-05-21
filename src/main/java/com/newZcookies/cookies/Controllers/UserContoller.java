@@ -46,4 +46,14 @@ public class UserContoller {
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
+
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(Model model, @PathVariable(value="id") Long id, Principal currentlyUser){
+        User user = userService.findUserById(id);
+        User cUser = userService.findUserByUserName(currentlyUser.getName());
+        if(cUser.isAdmin() || user == cUser)
+            userService.deleteUser(user);
+        else throw new IllegalArgumentException("У вас нет прав!");
+        return "redirect:/search";
+    }
 }
