@@ -45,6 +45,7 @@ public class SearchController {
         }
         Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
         model.addAttribute("recipes", recipes);
+        model.addAttribute("searchText", text);
         return "searchPage";
     }
 

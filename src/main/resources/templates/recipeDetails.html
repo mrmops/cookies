@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:insert="blocks/head::head"></head>
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title th:text="${recipe.name}"></title>
+</head>
 
 <header th:insert="blocks/header::header"></header>
 <div class="container m-a">
@@ -15,7 +19,7 @@
                 <a th:if="${recipe.author == currentlyUser or currentlyUser.isAdmin()}" th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn btn-danger">Удалить</a>
             </ul>
         </div>
-        <div th:if="${!recipe.getAppraisals().containsKey(currentlyUser)}" class="col-2">
+        <div th:if="${!recipe.containsAppriasalsByUser(currentlyUser)}" class="col-2">
             <form th:action="'/recipe/' + ${recipe.id}"  method="post">
                 <label for="select">Оцените рецепт</label>
                     <select class="form-control" name="appraisal" id="select">
@@ -24,11 +28,11 @@
                 <button class="form-control">Добавить</button><br>
             </form>
         </div>
-        <div th:if="${recipe.getAppraisals().containsKey(currentlyUser)}" class="col-2">
+        <div th:if="${recipe.containsAppriasalsByUser(currentlyUser)}" class="col-2">
             <form th:action="'/recipe/' + ${recipe.id}"  method="post">
                 <label for="select">Изменить оценку?</label>
                 <select class="form-control" name="appraisal" id="">
-                    <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}" th:selected="${n == recipe.getAppraisals().get(currentlyUser)}"></option>
+                    <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}" th:selected="${n == recipe.getAppriasalValueByUser(currentlyUser)}"></option>
                 </select>
                 <button class="form-control">Изменить</button><br>
             </form>

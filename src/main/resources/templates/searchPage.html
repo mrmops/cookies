@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:insert="blocks/head::head"></head>
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title>Поиск</title>
+</head>
 <body>
 <header th:insert="blocks/header::header"></header>
 <div class="row">
@@ -8,7 +12,7 @@
         <h2 class="text-center">Архив рецептов</h2>
         <div class="form-check">
             <label for="search">Поиск рецепта</label>
-            <input id="search" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
+            <input id="search" th:value="${searchText}" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
             <button class="btn btn-outline-primary" onclick="findRecipe()" type="button">Поиск</button>
         </div>
         <div id="result">
@@ -25,9 +29,8 @@
             let url = '/search/find';
             if ($('#search').val() != '') {
                 url = url + '@' + $('#search').val();
+                $('#result').load(url);
             }
-            console.log(url);
-            $('#result').load(url);
         }
     </script>
 </div>

@@ -80,7 +80,7 @@ public class RecipeController {
     public String addAppraisal(@PathVariable(value = "id") Long recipe_id, @ModelAttribute("appraisal") int appraisal, Principal currentlyPrincipal) throws NotFoundException {
         User user = userService.findUserByUserName(currentlyPrincipal.getName());
         Recipe recipe = recipeService.findRecipeById(recipe_id);
-        recipe.addAppraisals(user, appraisal);
+        recipeService.addAppraisals(user, recipe, appraisal);
         recipeService.saveRecipe(recipe);
         return "redirect:/recipe/" + recipe_id;
     }

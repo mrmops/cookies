@@ -70,7 +70,10 @@ public class UserService implements UserDetailsService {
         if (userRepository.findById(user.getId()).isPresent()) {
             userRepository.deleteById(user.getId());
         }
-        throw new UsernameNotFoundException("Пользователь не найден!");
+        else {
+            throw new UsernameNotFoundException("Пользователь не найден!");
+        }
+
     }
 
     public String getCurrentUsername() {

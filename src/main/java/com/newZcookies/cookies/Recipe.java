@@ -2,12 +2,9 @@ package com.newZcookies.cookies;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -44,12 +41,8 @@ public class Recipe {
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private Set<Tag> tags;
 
-    @ElementCollection
-    @CollectionTable(name = "appraisals",
-            joinColumns = @JoinColumn(name = "recipe_id"))
-    @MapKeyJoinColumn(name = "user_id")
-    @Column(name = "appraisal")
-    private Map<User, Integer> appraisals;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
+    private Set<Appriasal> appraisals;
 
     @OneToMany(mappedBy="recipe", cascade = CascadeType.REMOVE)
     private Set<Comment> comments;
@@ -91,8 +84,8 @@ public class Recipe {
     public Double updateRating() {
         double sum = 0;
         int count = 0;
-        for (int num:appraisals.values()) {
-            sum += num;
+        for (Appriasal num:appraisals) {
+            sum += num.getValue();
             count++;
         }
         return count == 0 ? 0 : sum / count;
@@ -116,20 +109,29 @@ public class Recipe {
         return id;
     }
 
-    public Map<User, Integer> getAppraisals() {
+    public Set<Appriasal> getAppraisals() {
         return appraisals;
     }
 
-    public void setAppraisals(Map<User, Integer> appraisals) {
+    public void setAppraisals(Set<Appriasal> appraisals) {
         this.appraisals = appraisals;
     }
 
-    public void addAppraisals(User user, int appraisal){
-        if(appraisals.containsKey(user))
-            appraisals.replace(user, appraisal);
-        else
-            appraisals.put(user, appraisal);
-        setRating();
+    public Appriasal getUserFromAppriasals(User user){
+        for (Appriasal a: appraisals
+             ) {
+            if(a.getAuthor().equals(user))
+                return a;
+        }
+        return null;
+    }
+
+    public boolean containsAppriasalsByUser(User user){
+        return getUserFromAppriasals(user) != null;
+    }
+
+    public Integer getAppriasalValueByUser(User user){
+        return getUserFromAppriasals(user).getValue();
     }
 
     public Set<Comment> getComments() {

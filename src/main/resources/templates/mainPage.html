@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:replace="blocks/head::head"></head>
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title>Главная страница</title>
+</head>
 <body>
     <header th:insert="blocks/header::header"></header>
 <div class="row">

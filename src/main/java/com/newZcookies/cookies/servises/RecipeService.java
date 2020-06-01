@@ -1,8 +1,10 @@
 package com.newZcookies.cookies.servises;
 
+import com.newZcookies.cookies.Appriasal;
 import com.newZcookies.cookies.Recipe;
 import com.newZcookies.cookies.Tag;
 import com.newZcookies.cookies.User;
+import com.newZcookies.cookies.repository.AppriasalsRepository;
 import com.newZcookies.cookies.repository.RecipeRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class RecipeService {
     RecipeRepository recipeRepository;
     @Autowired
     TagService tagService;
+    @Autowired
+    AppriasalsRepository appriasalsRepository;
 
 
     public List<Recipe> loadRecipeByName(String name) throws NotFoundException {
@@ -73,5 +77,21 @@ public class RecipeService {
         }
         recipes.addAll(recipeRepository.findByDescriptionContainsIgnoreCaseOrNameContainsIgnoreCase(text, name));
         return recipes;
+    }
+
+    public void saveAppriasals(Appriasal value){
+        appriasalsRepository.save(value);
+    }
+
+    public void addAppraisals(User user, Recipe recipe, int appraisal){
+        Appriasal a = recipe.getUserFromAppriasals(user);
+        if(a == null){
+            a = new Appriasal( user, recipe, appraisal);
+            recipe.getAppraisals().add(a);
+        }
+        else
+            a.setValue(appraisal);
+        saveAppriasals(a);
+        recipe.setRating();
     }
 }
