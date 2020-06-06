@@ -36,8 +36,11 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
+    private Set<Appriasal> appriasals;
 
     public User(String userName, String name, String secondName) {
         this.userName = userName;
