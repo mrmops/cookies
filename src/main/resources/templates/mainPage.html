@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title>Главная страница</title>
+</head>
+<body>
+    <header th:insert="blocks/header::header"></header>
+<div class="row">
+    <div class = "col-6 border border border-info rounded p-3 ml-5">
+        <h2 class="text-center">Лучшие рецепты</h2>
+        <ul class="list-group" >
+            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
+                <b th:text="${recipe.rating}"></b>
+                <span th:text="${recipe.name}"></span>
+            </a>
+        </ul>
+    </div>
+    <div class="col">
+
+    </div>
+    <div class="col">
+        <a class="btn btn-outline-primary m-2 text-nowrap" href="/recipe/add">Создать новый рецепт</a>
+    </div>
+</div>
+
+</body>
+</html>

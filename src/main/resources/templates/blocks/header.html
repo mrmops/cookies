@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <a th:href = "'/'">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Cookies</h5>
+        </a>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">Enterprise</a>
+            <a class="p-2 text-dark" href="#">Support</a>
+            <a class="p-2 text-dark" href="#">Pricing</a>
+        </nav>
+        <div class="ml-auto d-flex">
+            <form action="/search/find">
+                <input class="text-dark m-2 p-1" id="searchInput" name="searchInput" placeholder="Поиск" >
+            </form>
+            <div sec:authorize="!isAuthenticated()" >
+                <a class="btn btn-outline-primary m-2" href="/login">Войти</a>
+                <a class="btn btn-outline-primary m-2" href="/registration">Регистрация</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" >
+                <a sec:authentication="name" th:href="'/users/userName/' + ${#authorization.authentication.getName()}"></a>
+                <a th:href="@{/logout}" class="btn btn-outline-primary m-2">Выйти</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/users}" class="btn btn-outline-primary m-2">Пользователи</a>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

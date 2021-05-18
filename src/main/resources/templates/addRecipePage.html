@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title> Добавить рецепт </title>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+</head>
+<body>
+<header th:insert="blocks/header::header"></header>
+
+<div class = "container mt-5 mb-5">
+    <h1>Новый рецепт</h1>
+    <form method="post">
+        <input class="form-control" type="text" name="name" placeholder="Название рецепта" /><br>
+        <textarea class="form-control" typeof="text" name="description" placeholder="Описание"></textarea><br>
+        <select th:fragment="tagList" class="form-control" id="tagList" name="tagList" multiple>
+                <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+        </select><br>
+        <div th:if = "${tags.isEmpty()}">
+            Теги? никогда о них не слышал! можешь попробовать их создать!
+        </div><br>
+
+        <button class="form-control btn-success">Добавить</button><br>
+    </form>
+    <div>
+        <input class="form-control" type="text" id="tagText" name="tagText" placeholder="Тегов не бывает мало, а вот много нам не нужно" /><br>
+        <label for="tagText" >Добавить Тег!</label>
+        <button onclick="retrieveGuests()" class="form-control btn-info"type="button">Добавить тег</button><br>
+    </div>
+
+    <script>
+        function retrieveGuests() {
+            let url = '/tags/add';
+            let text = $('#tagText').val();
+            if (text != '') {
+                text = text.split(' ').join('_');
+                url = url + '/' + text;
+            }
+            $("#tagList").load(url);
+        }
+    </script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title th:text="${user.name}"></title>
+</head>
+
+<header th:insert="blocks/header::header"></header>
+<div class="container">
+    <div class="row">
+    <div class="col">
+        <ul class="list-group">
+            <li class="list-group-item" th:text="'Логин пользователя:' + ${user.username}"></li>
+            <li class="list-group-item" th:text="'Имя пользователя:' + ${user.name}"></li>
+            <li class="list-group-item" th:text="'Фамилия пользователя:' + ${user.secondName}"></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h1>Рецепты</h1>
+        <ul id="recipes" class="list-group">
+            <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${user.recipes}">
+                <span th:text="${recipe.name}"></span>
+                <b th:text="${recipe.rating}"></b>
+            </a>
+            <div th:if="${user.recipes.isEmpty()}" class="m-auto text-black-50">Тут пустовато...</div>
+        </ul>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="col">
+        <form th:action="'/users/' + ${user.id}"  method="post">
+            <select class="form-control" name="id_role">
+                <option th:each="role : ${listRoles}"
+                        th:value="${{role.id}}"
+                        th:text="${role.name}">
+                </option>
+            </select>
+            <button class="form-control">Добавить</button><br>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+
+
+</body>
+</html>

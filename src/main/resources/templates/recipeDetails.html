@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title th:text="${recipe.name}"></title>
+</head>
+
+<header th:insert="blocks/header::header"></header>
+<div class="container m-a">
+    <div class = "row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item" th:text="${recipe.name}"></li>
+                <li class="list-group-item" th:text="${recipe.rating}"></li>
+                <li class="list-group-item">
+                    <a th:href="'/users/' + ${recipe.author.id}" th:text="${recipe.author.username}"></a>
+                </li>
+                <a th:if="${recipe.author == currentlyUser or currentlyUser.isAdmin()}" th:href="'/recipe/' + ${recipe.id} + '/delete'" class="btn btn-danger">Удалить</a>
+            </ul>
+        </div>
+        <div th:if="${!recipe.containsAppriasalsByUser(currentlyUser)}" class="col-2">
+            <form th:action="'/recipe/' + ${recipe.id}"  method="post">
+                <label for="select">Оцените рецепт</label>
+                    <select class="form-control" name="appraisal" id="select">
+                        <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}"></option>
+                    </select>
+                <button class="form-control">Добавить</button><br>
+            </form>
+        </div>
+        <div th:if="${recipe.containsAppriasalsByUser(currentlyUser)}" class="col-2">
+            <form th:action="'/recipe/' + ${recipe.id}"  method="post">
+                <label for="select">Изменить оценку?</label>
+                <select class="form-control" name="appraisal" id="">
+                    <option th:each="n : ${#numbers.sequence(0,10)}" th:value="${n}" th:text="${n}" th:selected="${n == recipe.getAppriasalValueByUser(currentlyUser)}"></option>
+                </select>
+                <button class="form-control">Изменить</button><br>
+            </form>
+        </div>
+        <div class="col-2">
+            <h3>Теги</h3>
+            <ul id="recipes" class="list-group">
+                <a class="d-block text-decoration-none list-group-item" th:href="'/search/find+' + ${tag.name}" th:each="tag : ${recipe.tags}" >
+                    <span th:text="${tag.name}"></span>
+                </a>
+                <div th:if="${recipe.tags.isEmpty()}" class="m-auto text-black-50">Тут пустовато...</div>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <span th:text="${recipe.description}"></span>
+</div>
+
+<div class="container">
+    <h2>Комментарии</h2>
+    <div class="p-4">
+        <form th:action="${'/recipe/' + recipe.id + '/addComment'}" method="post">
+            <label for="comment">Оставьте отзыв</label>
+            <textarea id="comment" class="w-100" type="text" placeholder="Комментировать" name="text"></textarea>
+            <button class="btn btn-outline-primary" type="submit">Отправить</button>
+        </form>
+    </div>
+    <div class="border rounded border-bottom p-4">
+        <div class="row m-md-1 border rounded m-3 p-2" th:each="comment : ${comments}">
+            <div class="col-10">
+                <span class="" th:text="${comment.author.username}"></span>
+                <div class="" th:text="${comment.text}"></div>
+            </div>
+            <a class="btn btn-outline-danger col"
+               th:if="${currentlyUser == comment.author}"
+               th:href="${'/comment/' + comment.id + '/delete'}"
+            >Удалить</a>
+        </div>
+        <span th:if="${recipe.comments.isEmpty()}"  class="m-auto text-center text-black-50">Комментариев нет.... Будь первым!</span>
+    </div>
+
+</div>
+</body>
+</html>

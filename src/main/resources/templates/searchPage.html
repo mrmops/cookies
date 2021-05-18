@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+    <title>Поиск</title>
+</head>
+<body>
+<header th:insert="blocks/header::header"></header>
+<div class="row">
+    <div class = "col-6 border border border-info rounded p-3 ml-5">
+        <h2 class="text-center">Архив рецептов</h2>
+        <div class="form-check">
+            <label for="search">Поиск рецепта</label>
+            <input id="search" th:value="${searchText}" type="text" placeholder="Давайте поищем" class="form-control" name="text" />
+            <button class="btn btn-outline-primary" onclick="findRecipe()" type="button">Поиск</button>
+        </div>
+        <div id="result">
+            <ul class="list-group" th:fragment="resultList">
+                <a th:href = "'/recipe/' + ${recipe.id}" class="d-block text-decoration-none list-group-item" th:each="recipe : ${recipes}">
+                    <b th:text="${recipe.rating}"></b>
+                    <span th:text="${recipe.name}"></span>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <script>
+        function findRecipe() {
+            let url = '/search/find';
+            if ($('#search').val() != '') {
+                url = url + '@' + $('#search').val();
+                $('#result').load(url);
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>

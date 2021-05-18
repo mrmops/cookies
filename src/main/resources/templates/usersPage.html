@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Все пользователи</title>
+    <th:block th:include="blocks/head :: head">
+    </th:block>
+</head>
+<body>
+    <header th:insert="blocks/header::header"></header>
+    <div>
+        <div class = "border border-info rounded p-3 ml-5 mr-5">
+            <h2 class="text-center">Пользователи</h2>
+            <ul class="list-group" >
+                <div class="container">
+                    <div th:each="user : ${users}" class="row">
+                        <a th:href="'/users/' + ${user.id}" class="text-decoration-none row col-8">
+                            <div class="col border border-dark" th:text="${user.id}"></div>
+                            <div class="col-lg-10 border border-dark" th:text="${user.username} + ' ' + ${user.name}  + ' ' + ${user.secondName}"></div>
+                        </a>
+                        <a th:if="${!user.isAdmin()}" th:href="'/users/' + ${user.id} + '/delete'" class="btn btn-danger border border-dark rounded-0 col">Удалить</a>
+                        <a th:if="${user.isAdmin()}" class="btn btn-info border border-dark rounded-0 col">Админ</a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
