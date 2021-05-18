@@ -14,18 +14,19 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class AdminController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     public String listUsers(Model model){
         model.addAttribute("users", userService.allUsers());
         return "usersPage";
     }
 
-    @RequestMapping(value = "/admin/users/{id}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}/delete", method = RequestMethod.GET)
     public String handleDeleteUser(@PathVariable Long id) {
         userService.deleteUser(userService.findUserById(id));
         return "redirect:/admin/users";

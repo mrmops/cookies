@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/tags")
 public class TagContoller {
     @Autowired
     private RecipeService recipeService;
@@ -27,7 +28,7 @@ public class TagContoller {
     @Autowired
     private TagService tagService;
 
-    @RequestMapping(value = "/tags/add/{name}")
+    @RequestMapping(value = "/add/{name}")
     public String addTagToPage(@PathVariable(value = "name") String name, Model model) {
         tagService.saveTag(new Tag(name));
         List<Tag> tags = tagService.findAllTags();

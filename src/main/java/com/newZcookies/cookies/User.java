@@ -5,6 +5,8 @@ import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -16,9 +18,11 @@ public class User implements UserDetails {
     private Long id;
 
     @NaturalId
+    @Size(min = 4, message = "Имя пользователя должно быть не меньше 4 символов")
     private String userName;
 
     @Column(name = "password")
+    @Size(min=6, message = "Пароль должен быть не меньше 6 символов")
     private String password;
 
     @Transient
@@ -36,10 +40,10 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Appriasal> appriasals;
 
     public User(String userName, String name, String secondName) {

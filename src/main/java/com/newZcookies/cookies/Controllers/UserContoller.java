@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("/users")
 public class UserContoller {
 
     @Autowired
@@ -21,7 +22,7 @@ public class UserContoller {
     @Autowired
     RoleRepository roleRepository;
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public String userDetails(Model model, @PathVariable(value="id") Long id, Principal currentlyUser){
         User user = userService.findUserById(id);
         model.addAttribute("user", user);
@@ -32,14 +33,7 @@ public class UserContoller {
         return "userDetails";
     }
 
-    @GetMapping("/users/userName/{name}")
-    public String userDetails(Model model, @PathVariable(value="name") String name, Principal currentlyUser){
-        User user = userService.findUserByUserName(name);
-        return "redirect:/users/" + user.getId();
-    }
-
-
-    @PostMapping("/users/{id}")
+    @PostMapping("/{id}")
     public String addRoleToUser(@PathVariable(value = "id") Long user_id, @ModelAttribute("id_role") Long id_role) {
         User user = userService.findUserById(user_id);
         user.getRoles().add(roleRepository.findById(id_role).orElse(new Role("OTHER")));
@@ -47,7 +41,14 @@ public class UserContoller {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/users/{id}/delete")
+
+    @GetMapping("/userName/{name}")
+    public String userDetails(Model model, @PathVariable(value="name") String name, Principal currentlyUser){
+        User user = userService.findUserByUserName(name);
+        return "redirect:/users/" + user.getId();
+    }
+
+    @GetMapping("/{id}/delete")
     public String deleteUser(Model model, @PathVariable(value="id") Long id, Principal currentlyUser){
         User user = userService.findUserById(id);
         User cUser = userService.findUserByUserName(currentlyUser.getName());

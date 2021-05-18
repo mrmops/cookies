@@ -21,13 +21,14 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/search/")
 public class SearchController {
     @Autowired
     private RecipeService recipeService;
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/search")
+    @GetMapping()
     public String searchPage(Model model) {
         List<Recipe> recipes = recipeService.allRecipes();
         List<Tag> tags = tagService.findAllTags();
@@ -36,40 +37,31 @@ public class SearchController {
         return "searchPage";
     }
 
-    @GetMapping("/search/find+{text}")
-    public String searchPageFind(@PathVariable("text") String text, Model model) throws NotFoundException {
-        Set<Tag> tags = new HashSet<Tag>();
-        for (String e: text.split(" ")
-        ) {
-            tags.addAll(tagService.findByNameContains(e));
-        }
-        Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
-        model.addAttribute("recipes", recipes);
+    @GetMapping("/find+{text}")
+    public String searchPageFind(@PathVariable("text") String text, Model model) {
+        model.addAttribute("recipes", findRecipesByTagsAndText(text));
         model.addAttribute("searchText", text);
         return "searchPage";
     }
 
-    @RequestMapping("/search/find@{text}")
-    public String helpSearch(@PathVariable("text") String text, Model model) throws NotFoundException {
-        Set<Tag> tags = new HashSet<Tag>();
-        for (String e: text.split(" ")
-             ) {
-            tags.addAll(tagService.findByNameContains(e));
-        }
-        Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
-        model.addAttribute("recipes", recipes);
+    @RequestMapping("/find@{text}")
+    public String helpSearch(@PathVariable("text") String text, Model model) {
+        model.addAttribute("recipes", findRecipesByTagsAndText(text));
         return "searchPage::resultList";
     }
 
-    @GetMapping("/search/find")
-    public String redirectSearch(@ModelAttribute("searchInput") String text, Model model) throws NotFoundException {
+    @GetMapping("/find")
+    public String redirectSearch(@ModelAttribute("searchInput") String text, Model model) {
+        model.addAttribute("recipes", findRecipesByTagsAndText(text));
+        return "searchPage";
+    }
+
+    private Set<Recipe> findRecipesByTagsAndText(String text){
         Set<Tag> tags = new HashSet<Tag>();
         for (String e: text.split(" ")
         ) {
             tags.addAll(tagService.findByNameContains(e));
         }
-        Set<Recipe> recipes = recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
-        model.addAttribute("recipes", recipes);
-        return "searchPage";
+        return recipeService.findByDescriptionContainsOrNameContainsAndTagsContaining(text, text, tags);
     }
 }

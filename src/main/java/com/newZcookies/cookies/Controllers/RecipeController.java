@@ -20,10 +20,11 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/recipe")
 public class RecipeController {
+
     @Autowired
     private RecipeService recipeService;
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -31,14 +32,14 @@ public class RecipeController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/recipe/add")
+    @GetMapping("/add")
     public String addRecipePage(Model model){
         List<Tag> tags = tagService.findAllTags();
         model.addAttribute("tags", tags);
         return "addRecipePage";
     }
 
-    @PostMapping("/recipe/add")
+    @PostMapping("/add")
     public String addRecipe(@RequestParam String name, @RequestParam String description, @RequestParam Set<Long> tagList, Model model, Principal currentlyPrincipal) throws NotFoundException {
         User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
         Set<Tag> tags = new HashSet<Tag>();
@@ -51,7 +52,7 @@ public class RecipeController {
         return "redirect:/recipe/" + recipe.getId().toString();
     }
 
-    @GetMapping("/recipe/{id}")
+    @GetMapping("/{id}")
     public String recipePage(@PathVariable(value = "id") Long id, Model model, Principal currentlyPrincipal) throws NotFoundException {
         Recipe recipe = recipeService.findRecipeById(id);
         User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
@@ -63,7 +64,7 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/recipe/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteRecipe(@PathVariable(value = "id") Long id, Model model, Principal currentlyPrincipal) throws NotFoundException {
         Recipe recipe = recipeService.findRecipeById(id);
         User currentlyUser = userService.findUserByUserName(currentlyPrincipal.getName());
@@ -76,7 +77,7 @@ public class RecipeController {
             return "error-page";
     }
 
-    @PostMapping("/recipe/{id}")
+    @PostMapping("/{id}")
     public String addAppraisal(@PathVariable(value = "id") Long recipe_id, @ModelAttribute("appraisal") int appraisal, Principal currentlyPrincipal) throws NotFoundException {
         User user = userService.findUserByUserName(currentlyPrincipal.getName());
         Recipe recipe = recipeService.findRecipeById(recipe_id);
@@ -85,10 +86,10 @@ public class RecipeController {
         return "redirect:/recipe/" + recipe_id;
     }
 
-    @GetMapping("/recipe/search/{name}")
+    @GetMapping("/search/{name}")
     public String SearchRecipes(@PathVariable(value = "name") String name, Model model){
         List<Recipe> recipes = recipeService.findAllRecipesByTagName(name);
         model.addAttribute("find_recipes", recipes);
-        return "search_page";
+        return "searchPage";
     }
 }
